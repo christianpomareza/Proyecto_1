@@ -28,5 +28,16 @@ Objetivos:
 Conocimientos necesarios:
 
     1. Fundamentos de Informática Forense
+       
+       a. Autenticidad y Legalidad: El proceso debe ser realizado conforme a las normativas legales, 
+          asegurando que la evidencia sea aceptada en un tribunal.
+       b. Preservación de la Evidencia: Es crucial evitar que los datos se alteren o se destruyan, 
+          para garantizar la validez de la evidencia.
+       c. Integridad de la Evidencia: Toda la evidencia debe ser gestionada para asegurar que no se
+          modifique durante el proceso de investigación.
+       d. Documentación y Cadena de Custodia: Cada paso tomado durante la recolección y análisis debe 
+          estar adecuadamente documentado, asegurando la cadena de custodia para que los resultados puedan 
+          ser validados.
+
     2. Sistemas Operativos Móviles y Estructura de Almacenamiento
     3. Técnicas de Recuperación de Datos
