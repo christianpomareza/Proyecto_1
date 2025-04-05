@@ -24,3 +24,9 @@ Objetivos:
            Implementar herramientas para correlacionar la información recuperada y generar 
            informes claros que presenten la línea temporal de eventos y evidencias, 
            facilitando su interpretación en el contexto de una investigación.
+
+Conocimientos necesarios:
+
+    1. Fundamentos de Informática Forense
+    2. Sistemas Operativos Móviles y Estructura de Almacenamiento
+    3. Técnicas de Recuperación de Datos
