@@ -1,10 +1,10 @@
-## 🔍 Proyecto de Investigación Forense Móvil
+## Proyecto de Investigación Forense Móvil
 
 Este proyecto tiene como objetivo desarrollar una herramienta forense en Python orientada al análisis y recuperación de datos desde dispositivos móviles (principalmente Android), utilizando imágenes digitales simuladas. La finalidad es apoyar procesos de investigación digital mediante la extracción, análisis y visualización de evidencias, contribuyendo al fortalecimiento de prácticas forenses en el ámbito académico y profesional.
 
 ---
 
-### 🎯 Objetivos del Proyecto
+### Objetivos del Proyecto
 
 - Diseñar una herramienta que permita realizar análisis forense básico en entornos móviles.
 - Simular escenarios de recuperación de datos relevantes para una investigación.
@@ -13,13 +13,13 @@ Este proyecto tiene como objetivo desarrollar una herramienta forense en Python 
 
 ---
 
-### 📌 Importancia del Análisis Forense Móvil
+### Importancia del Análisis Forense Móvil
 
 Con el creciente uso de dispositivos móviles en actividades cotidianas y delictivas, el análisis forense móvil se vuelve esencial. Este tipo de análisis permite identificar, recuperar y preservar evidencias digitales críticas que pueden ser utilizadas en procesos judiciales, auditorías o investigaciones internas.
 
 ---
 
-### 📦 Alcance y Entregables
+### Alcance y Entregables
 
 - Desarrollo de una interfaz en consola y/o gráfica en Python.
 - Módulos funcionales para:
@@ -44,7 +44,7 @@ Con el creciente uso de dispositivos móviles en actividades cotidianas y delict
 
 ---
 
-### 📁 Documentación en Repositorio
+### Documentación en Repositorio
 
 Este repositorio incluye:
 
@@ -56,5 +56,5 @@ Este repositorio incluye:
 
 ---
 
-🔧 *El proyecto se encuentra en desarrollo activo. Toda contribución y sugerencia es bienvenida.*
+*El proyecto se encuentra en desarrollo activo. Toda contribución y sugerencia es bienvenida.*
 
