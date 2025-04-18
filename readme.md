@@ -54,6 +54,8 @@ Este repositorio incluye:
 - Informes y reportes generados (`/reports`)
 - Diagrama de arquitectura del sistema (en preparación)
 
+### Diagrama de clases
+![Diagrama de clases]{bLLDRnmt3BthLn2v94NMX_GRHX6ai9scW0qONhSzApFSCLkDD20vcxX5VrLllUQFLLgDiAFix3OvUSptoFUMfAHNefPrx9rnk57G04pTWq9BZ8rIyCOyXKlSaAU6FlpZeKLed1KK4Em-_Ei17JGSVEZOzjQO10hSSlWzviDV1k0ClEtn7DRAvBjT8BnDA6rHgh0qOQY9IZqwylFWSs.png}
 ---
 
 *El proyecto se encuentra en desarrollo activo. Toda contribución y sugerencia es bienvenida.*
