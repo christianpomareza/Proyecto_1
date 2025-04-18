@@ -57,4 +57,4 @@ Este repositorio incluye:
 ---
 
 *El proyecto se encuentra en desarrollo activo. Toda contribución y sugerencia es bienvenida.*
-
+ tabien actualiza todo eso en base al cronograma
