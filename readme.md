@@ -62,7 +62,7 @@ Este repositorio incluye:
 
 ## Cronograma para el software
 
-![Cronograma para el software](tabla.png)
+![Cronograma para el software](tabla1.png)
 
 
 ---
