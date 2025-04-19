@@ -60,6 +60,11 @@ Este repositorio incluye:
 
 ![Diagrama de Clases](Diagrama_clases.png)
 
+## Cronograma para el software
+
+![Cronograma para el software](tabla.png)
+
+
 ---
 
 *El proyecto se encuentra en desarrollo activo. Toda contribución y sugerencia es bienvenida.*
