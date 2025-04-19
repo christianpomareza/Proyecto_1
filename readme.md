@@ -4,6 +4,7 @@ Este proyecto tiene como objetivo desarrollar una herramienta forense en Python 
 
 ---
 ###LINK DE TRELLO: https://trello.com/invite/b/6802bb04599629f0857ec560/ATTI5ef1a771555e1333de87531461616076D3649F0E/proyecto-de-ing-de-software
+###LINK DE LUCIDCHART: https://lucid.app/lucidchart/103312e1-8ae2-4878-a567-67887c13c2e9/edit?viewport_loc=-580%2C-337%2C1738%2C792%2C0_0&invitationId=inv_c61a65f1-2868-4fbc-83a7-18b76a318f30
 
 ### Objetivos del Proyecto
 
