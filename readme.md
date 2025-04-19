@@ -3,6 +3,7 @@
 Este proyecto tiene como objetivo desarrollar una herramienta forense en Python orientada al análisis y recuperación de datos desde dispositivos móviles (principalmente Android), utilizando imágenes digitales simuladas. La finalidad es apoyar procesos de investigación digital mediante la extracción, análisis y visualización de evidencias, contribuyendo al fortalecimiento de prácticas forenses en el ámbito académico y profesional.
 
 ---
+###LINK DE TRELLO: https://trello.com/invite/b/6802bb04599629f0857ec560/ATTI5ef1a771555e1333de87531461616076D3649F0E/proyecto-de-ing-de-software
 
 ### Objetivos del Proyecto
 
@@ -61,4 +62,4 @@ Este repositorio incluye:
 ---
 
 *El proyecto se encuentra en desarrollo activo. Toda contribución y sugerencia es bienvenida.*
- tabien actualiza todo eso en base al cronograma
+
