@@ -10,7 +10,7 @@ Este proyecto tiene como objetivo desarrollar una herramienta forense en Python 
 
 - Diseñar una herramienta que permita realizar análisis forense básico en entornos móviles.
 - Simular escenarios de recuperación de datos relevantes para una investigación.
-- Aplicar técnicas de ingeniería inversa y parsing de estructuras internas de Android.
+- Aplicar técnicas de ingeniería inversa y parsing de estructuras internas de Android y iPhone.
 - Presentar resultados legibles y útiles para su uso como evidencia.
 
 ---
