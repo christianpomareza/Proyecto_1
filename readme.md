@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## Proyecto de Investigación Forense Móvil
 
 Este proyecto tiene como objetivo desarrollar una herramienta forense en Python orientada al análisis y recuperación de datos desde dispositivos móviles (principalmente Android), utilizando imágenes digitales simuladas. La finalidad es apoyar procesos de investigación digital mediante la extracción, análisis y visualización de evidencias, contribuyendo al fortalecimiento de prácticas forenses en el ámbito académico y profesional.
@@ -69,3 +70,18 @@ Este repositorio incluye:
 
 *El proyecto se encuentra en desarrollo activo. Toda contribución y sugerencia es bienvenida.*
 
+=======
+# Interfaz Tipo Celular con Tkinter
+
+Este es un proyecto simple hecho con Python y Tkinter que simula una interfaz de celular, integrando comandos ADB para leer datos del teléfono conectado por USB.
+
+## Requisitos
+- Python 3
+- ADB (Android Debug Bridge) instalado y en el PATH
+
+## Uso
+1. Conecta un teléfono Android por USB.
+2. Ejecuta el archivo `main.py`:
+```bash
+python main.py
+>>>>>>> rama_christian
