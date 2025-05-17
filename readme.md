@@ -71,17 +71,16 @@ Este repositorio incluye:
 *El proyecto se encuentra en desarrollo activo. Toda contribución y sugerencia es bienvenida.*
 
 =======
-# Interfaz Tipo Celular con Tkinter
+# 📱 Interfaz Celular con PyQt6
 
-Este es un proyecto simple hecho con Python y Tkinter que simula una interfaz de celular, integrando comandos ADB para leer datos del teléfono conectado por USB.
+Una interfaz tipo smartphone con:
+- Menú principal con iconos
+- Pantalla de ajustes
+- Registro de llamadas (vía ADB)
+- Listado de aplicaciones
 
-## Requisitos
-- Python 3
-- ADB (Android Debug Bridge) instalado y en el PATH
-
-## Uso
-1. Conecta un teléfono Android por USB.
-2. Ejecuta el archivo `main.py`:
-```bash
-python main.py
+## 🚀 Cómo ejecutar
+1. **Requisitos**:
+   ```bash
+   pip install -r requirements.txt
 >>>>>>> rama_christian
