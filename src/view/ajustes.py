@@ -62,7 +62,7 @@ def crear_pantalla_ajustes(parent, devices_connected):
                 adb_output.setText("No hay dispositivos conectados")
                 return
 
-            # Ejecutar el comando df -h
+            # Ejecutar el comando df -h (MODELO)
             result = subprocess.run(
                 ["adb", "shell", "df", "-h"],
                 capture_output=True,
@@ -71,18 +71,18 @@ def crear_pantalla_ajustes(parent, devices_connected):
             )
 
             if result.returncode == 0:
-                # Procesar la salida para hacerla más amigable
+                # Procesar la salida para hacerla más amigable (MODELO)
                 output_text = result.stdout
                 lines = output_text.strip().split('\n')
 
-                # Ignorar la primera línea (encabezados)
+                # Ignorar la primera línea (encabezados) (MODELO)
                 data_lines = lines[1:] if len(lines) > 1 else []
 
-                # Crear una salida formateada y amigable
+                # Crear una salida formateada y amigable (VISTA)
                 formatted_output = "<style>table {width: 100%; border-collapse: collapse;} th {background-color: #4CAF50; color: white; padding: 10px; text-align: left;} td {padding: 8px; border-bottom: 1px solid #ddd;} tr:nth-child(even) {background-color: #f2f2f2;}</style>"
                 formatted_output += "<table>"
                 formatted_output += "<tr><th>Unidad de Almacenamiento</th><th>Espacio Total</th><th>Espacio Usado</th><th>Espacio Disponible</th><th>% Usado</th></tr>"
-
+#INICIO CONTROLADOR
                 for line in data_lines:
                     parts = re.split(r'\s+', line.strip())
                     if len(parts) >= 6:
@@ -130,9 +130,9 @@ def crear_pantalla_ajustes(parent, devices_connected):
 
                         # Añadir fila a la tabla
                         formatted_output += f"<tr><td>{friendly_name}</td><td>{size}</td><td>{used}</td><td>{available}</td>{percentage_cell}</tr>"
-
+#FIN CONTROLADOR
                 formatted_output += "</table>"
-
+#INICIO CONTROLADOR, CREAR NUEVA FUNCION
                 # Si hay pocas líneas, agregar un resumen visual
                 if len(data_lines) > 0:
                     formatted_output += "<br><h3>Resumen de Almacenamiento</h3>"
@@ -180,7 +180,7 @@ def crear_pantalla_ajustes(parent, devices_connected):
                                 formatted_output += f"<div style='background-color: {color}; width: {percentage_num*2}px; height: 20px;'></div></div> {percentage_num}%</div>"
                             except ValueError:
                                 pass
-
+#FIN CONTROLADOR
                 adb_output.setHtml(formatted_output)
             else:
                 adb_output.setText(
