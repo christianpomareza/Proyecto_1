@@ -1,7 +1,6 @@
 from PyQt6.QtWidgets import QWidget, QVBoxLayout, QFrame, QHBoxLayout, QPushButton, QLabel
 from PyQt6.QtCore import Qt
 
-
 class AppScreen(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -9,7 +8,6 @@ class AppScreen(QWidget):
         self.layout.setContentsMargins(10, 10, 10, 10)
         self.layout.setSpacing(10)
 
-        # Barra superior con título y botón de regreso
         self.barra_superior = QFrame()
         self.barra_superior.setStyleSheet(
             "background-color: rgba(255, 255, 255, 150); border-radius: 15px;")
@@ -40,11 +38,9 @@ class AppScreen(QWidget):
 
         self.layout.addWidget(self.barra_superior)
 
-        # Área de contenido
         self.contenido = QWidget()
         self.layout.addWidget(self.contenido, 1)
 
-        # Conectar botón de regreso
         self.btn_regresar.clicked.connect(self.regresar)
 
     def regresar(self):
