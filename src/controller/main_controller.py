@@ -1,4 +1,3 @@
-# src/controller/main_controller.py
 
 from PyQt6.QtWidgets import (
     QMainWindow, QStackedWidget, QPushButton, QVBoxLayout, QHBoxLayout,
@@ -7,19 +6,15 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtCore import QTimer, Qt, QTime
 import datetime
 
-# --- IMPORTACIONES DE LOS MÓDULOS MVC ---
-# Controlador del Menú Principal
+
 from .menu_controller import MenuController
 
 # Módulo de Llamadas (Modelo, Vista, Controlador)
 from ..model.llamadas_model import CallLogModel        # Importación relativa corregida
-# VVVVVVVV CAMBIO AQUÍ VVVVVVVV
+
 from ..view.llamadas_view import LlamadasView            # Importación relativa CORREGIDA: era CallLogView
-# ^^^^^^^^ CAMBIO AQUÍ ^^^^^^^^
+
 from .llamadas_controller import LlamadasController      # Importación relativa: ahora importa LlamadasController
-# NOTA: En tu original decía 'CallLogController' aquí, pero como tu archivo se llama LlamadasController,
-# y la clase en él se llama LlamadasController, también he corregido esto para consistencia.
-# Si tu clase en llamadas_controller.py se llamara CallLogController, dejarías CallLogController aquí.
 
 
 # Módulo de Ajustes (Modelo, Vista, Controlador)
@@ -27,9 +22,6 @@ from ..model.ajustes_model import AjustesModel          # Importación relativa 
 from ..view.ajustes_view import AjustesView              # Importación relativa corregida
 from .ajustes_controller import AjustesController        # Importación relativa corregida
 
-# Si AppScreen no se usa directamente en este archivo (solo la usas en las vistas de sub-módulos),
-# esta importación puede ser eliminada si tu editor la marca como no utilizada.
-# from src.view.main_window import AppScreen
 
 
 class MainController(QMainWindow):

@@ -1,44 +1,53 @@
-# src/controller/menu_controller.py
-
-from ..model.menu_model import MenuModel # Importamos el modelo
-from ..view.menu_view import MenuView    # Importamos la vista
+import subprocess
+import os
+from pathlib import Path
+from PyQt6.QtWidgets import QMessageBox
+from ..model.menu_model import MenuModel
+from ..view.menu_view import MenuView
 
 class MenuController:
-    def __init__(self, main_app_controller): # Recibe directamente el MainController
-        self.main_app_controller = main_app_controller # Guarda la referencia
-        self.model = MenuModel() # Instancia del modelo
-        self.view = MenuView(main_app_controller) # Le pasamos el main_app_controller a la vista
+    def __init__(self, main_app_controller):
+        self.main_app_controller = main_app_controller
+        self.model = MenuModel()
+        self.view = MenuView(main_app_controller)
         self._connect_signals()
-        self._populate_menu_icons() # Cargar los iconos al iniciar el controlador
+        self._populate_menu_icons()
 
     def _connect_signals(self):
-        """
-        Conecta las señales de la vista con los slots del controlador.
-        """
-        # La barra de búsqueda puede conectarse aquí si lo deseas.
-        # self.view.barra_busqueda.textChanged.connect(self.filter_apps)
-        pass
+        self.view.icon_clicked.connect(self._handle_icon_click)
+
+    def _handle_icon_click(self, screen_name):
+        if screen_name == "whatsapp":
+            self._launch_external_app("main7.py", "WhatsApp Viewer")
+        elif screen_name == "mensajes": # Esta condición ya existía y es la que necesitas
+            self._launch_external_app("mensajes.py", "Visor de Mensajes")
+        else:
+            self.main_app_controller.change_screen(screen_name)
+
+    def _launch_external_app(self, filename, app_name):
+        """Método genérico para lanzar apps externas"""
+        try:
+            base_dir = Path(__file__).parent.parent
+            app_path = base_dir / filename
+            
+            if app_path.exists():
+                subprocess.Popen(["python", str(app_path)])
+            else:
+                QMessageBox.critical(
+                    self.view,
+                    "Error",
+                    f"¡Archivo {filename} no encontrado!\nRuta esperada: {app_path}"
+                )
+        except Exception as e:
+            QMessageBox.critical(
+                self.view,
+                "Error",
+                f"Error al abrir {app_name}:\n{str(e)}"
+            )
 
     def _populate_menu_icons(self):
-        """
-        Obtiene los datos de los iconos de las aplicaciones del modelo
-        y se los pasa a la vista para que los dibuje.
-        También proporciona el callback de navegación del MainController a la vista.
-        """
-        app_icons_data = self.model.get_app_icons_data() # Obtener los datos del modelo
-
-        # Pasamos a la vista los datos de los iconos y la función de navegación (change_screen)
-        # que debe ser provista por el MainController (el 'parent' de la vista).
-        if hasattr(self.view.parent(), 'change_screen'):
-            self.view.populate_icons(app_icons_data, self.view.parent().change_screen)
-        else:
-            print("Advertencia: El padre de MenuView no tiene el método 'change_screen'. Los iconos no se conectarán para la navegación.")
+        """Carga los íconos en la vista"""
+        self.view.populate_icons(self.model.get_app_icons_data(), None)
 
     def get_view(self):
-        """
-        Retorna la instancia de la vista del menú.
-        MainController usará este método para añadir la vista del menú al QStackedWidget.
-        """
         return self.view
-
-    # El método update_clock ya no es necesario aquí porque la vista lo maneja directamente.
