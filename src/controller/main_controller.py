@@ -1,4 +1,3 @@
-
 from PyQt6.QtWidgets import (
     QMainWindow, QStackedWidget, QPushButton, QVBoxLayout, QHBoxLayout,
     QFrame, QLabel, QMessageBox, QWidget, QSpacerItem, QSizePolicy
@@ -16,6 +15,11 @@ from ..view.llamadas_view import LlamadasView            # Importación relativa
 
 from .llamadas_controller import LlamadasController      # Importación relativa: ahora importa LlamadasController
 
+from src.view.icono import IconoApp
+from PyQt6.QtWidgets import QGridLayout
+from src.controller.reportes_controller import ReportesController
+
+
 
 # Módulo de Ajustes (Modelo, Vista, Controlador)
 from ..model.ajustes_model import AjustesModel          # Importación relativa corregida
@@ -27,7 +31,7 @@ from .ajustes_controller import AjustesController        # Importación relativa
 class MainController(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Interfaz Tipo Celular")
+        self.setWindowTitle("Forencell: Obtén evidencia digital al instante.")
         self.setGeometry(100, 100, 320, 600) # Tamaño y posición de la ventana principal
 
         # Contenedor principal de la ventana (para el layout general)
@@ -219,3 +223,4 @@ class MainController(QMainWindow):
         """
         self.nav_back_button.setEnabled(len(self.view_history) > 0)
         self.nav_home_button.setEnabled(self.stacked_widget.currentWidget() != self.menu_controller.get_view())
+

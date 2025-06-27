@@ -32,7 +32,7 @@ class MenuView(AppScreen):
 
         # Barra superior con búsqueda y reloj
         barra_superior = QFrame()
-        barra_superior.setStyleSheet("background-color: rgba(255, 255, 255, 150); border-radius: 15px;")
+        barra_superior.setStyleSheet("background-color: rgba(40, 40, 40, 0.7); border-radius: 18px; box-shadow: 0px 2px 12px #0008;")
         barra_superior.setMaximumHeight(50)
         barra_superior_layout = QHBoxLayout(barra_superior)
         barra_superior_layout.setContentsMargins(15, 5, 15, 5)
@@ -41,16 +41,20 @@ class MenuView(AppScreen):
         self.barra_busqueda.setPlaceholderText("🔍 Buscar apps...")
         self.barra_busqueda.setStyleSheet("""
             QLineEdit {
-                background-color: rgba(255, 255, 255, 180);
+                background-color: rgba(60, 60, 60, 0.8);
+                color: white;
                 border-radius: 15px;
                 padding: 8px 15px;
-                font-size: 12px;
+                font-size: 13px;
                 border: none;
+            }
+            QLineEdit::placeholder {
+                color: #cccccc;
             }
         """)
 
         self.reloj = QLabel()
-        self.reloj.setStyleSheet("color: #333; font-size: 14px; font-weight: bold;")
+        self.reloj.setStyleSheet("color: #fff; font-size: 16px; font-weight: bold;")
         self.reloj.setAlignment(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter)
         self.reloj.setMinimumWidth(60)
 
@@ -96,3 +100,10 @@ class MenuView(AppScreen):
             if col > 3:
                 col = 0
                 row += 1
+
+    def add_custom_icon(self, icon_widget):
+        """Agrega un icono extra manualmente al grid"""
+        count = self.grid_layout.count()
+        row = count // 4
+        col = count % 4
+        self.grid_layout.addWidget(icon_widget, row, col)

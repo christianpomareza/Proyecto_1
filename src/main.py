@@ -2,7 +2,9 @@
 from PyQt6.QtWidgets import QApplication
 import sys
 import os
-from src.controller.main_controller import MainController # Importación absoluta para el script principal
+from src.controller.main_controller import MainController  # Importación relativa para ejecución directa
+
+
 
 if __name__ == "__main__":
 
