@@ -116,13 +116,13 @@ mi-app-celular/
 
 ## 🧩 Diagrama de Clases
 
-![Diagrama de Clases](Diagrama_clases.png)
+![Diagrama de Clases](Images/Diagrama_clases.png)
 
 ---
 
 ## 🧠 Cronograma para el Software
 
-![Cronograma para el software](tabla1.png)
+![Cronograma para el software](Images/tabla1.png)
 
 ---
 
