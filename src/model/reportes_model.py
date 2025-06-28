@@ -5,6 +5,8 @@ from reportlab.lib.pagesizes import letter
 import os
 import pathlib
 import sys
+import xml.etree.ElementTree as ET
+import re
 
 class ReportesModel:
     def generar_reporte_pdf(self, llamadas=None, ajustes=None, apps=None):
@@ -38,7 +40,9 @@ class ReportesModel:
         y -= 18
         c.drawString(80, y, "4. Aplicaciones Disponibles")
         y -= 18
-        c.drawString(80, y, "5. Hash de Integridad")
+        c.drawString(80, y, "5. Resumen de Mensajes")
+        y -= 18
+        c.drawString(80, y, "6. Hash de Integridad")
         c.showPage()
 
         # Hoja 2: Versión para lectura humana
@@ -46,13 +50,13 @@ class ReportesModel:
         c.setFont("Helvetica-Bold", 16)
         c.drawCentredString(width/2, y, "Forencell: Reporte final")
         y -= 30
-        c.setFont("Helvetica", 11)
+        c.setFont("Helvetica-Bold", 12)
         c.drawString(60, y, "1. Introducción")
         y -= 18
         c.setFont("Helvetica", 10)
         intro = (
             "Este reporte ha sido generado automáticamente por Forencell para documentar y preservar evidencia digital obtenida de un dispositivo móvil. "
-            "A continuación se presenta un resumen estructurado de la información relevante extraída, incluyendo historial de llamadas, ajustes del dispositivo y aplicaciones disponibles al momento de la adquisición."
+            "A continuación se presenta un resumen estructurado de la información relevante extraída, incluyendo historial de llamadas, ajustes del dispositivo, aplicaciones disponibles y los mensajes SMS más recientes."
         )
         for linea in self._wrap_text(intro, 90):
             c.drawString(80, y, linea)
@@ -96,8 +100,42 @@ class ReportesModel:
             c.drawString(80, y, "No se pudo obtener la lista de aplicaciones.")
             y -= 13
         y -= 5
+
+        # --- NUEVA SECCIÓN: Resumen de Mensajes ---
         c.setFont("Helvetica-Bold", 12)
-        c.drawString(60, y, "5. Hash de Integridad")
+        c.drawString(60, y, "5. Resumen de Mensajes")
+        y -= 18
+        mensajes = self._obtener_ultimos_20_mensajes_sms(formato_lista=True)
+        if isinstance(mensajes, str):
+            c.setFont("Helvetica", 10)
+            for linea in self._wrap_text(mensajes, 90):
+                c.drawString(80, y, linea)
+                y -= 13
+        else:
+            for m in mensajes:
+                # Subtítulo: fecha y tipo, en negrita y subrayado
+                c.setFont("Helvetica-Bold", 10)
+                c.drawString(80, y, f"{m['fecha']} - {m['tipo']}")
+                y -= 13
+                # Número en negrita y subrayado
+                c.setFont("Helvetica-Bold", 10)
+                c.drawString(100, y, f"Número: {m['contacto']}")
+                c.line(100, y-1, 100 + c.stringWidth(f"Número: {m['contacto']}", "Helvetica-Bold", 10), y-1)
+                y -= 13
+                # Mensaje como párrafo
+                c.setFont("Helvetica", 10)
+                for linea in self._wrap_text(m['body'], 90):
+                    c.drawString(120, y, linea)
+                    y -= 13
+                # Doble enter (espacio extra entre mensajes)
+                y -= 13
+                if y < 80:
+                    c.showPage()
+                    y = height-60
+        y -= 5
+
+        c.setFont("Helvetica-Bold", 12)
+        c.drawString(60, y, "6. Hash de Integridad")
         y -= 18
         c.setFont("Helvetica", 10)
         c.drawString(80, y, "El hash SHA-256 del archivo PDF se muestra en la ventana de confirmación al finalizar la generación.")
@@ -107,6 +145,70 @@ class ReportesModel:
             hash_valor = hashlib.sha256(f.read()).hexdigest()
 
         return archivo, hash_valor
+
+    def _obtener_ultimos_20_mensajes_sms(self, formato_lista=False):
+        # Usa la ruta absoluta a la carpeta Backup_mensajes
+        ruta_carpeta_xml = r"C:\Users\HP\Desktop\Proyecto_1\Backup_mensajes"
+        recent_file = None
+        max_timestamp_value = -1
+        filename_regex = re.compile(r'sms-(\d{14})\.xml$')
+        if not os.path.isdir(ruta_carpeta_xml):
+            return "No se encontró la carpeta de mensajes SMS."
+        for filename in os.listdir(ruta_carpeta_xml):
+            match = filename_regex.search(filename)
+            if match:
+                timestamp_str = match.group(1)
+                try:
+                    current_timestamp_value = int(timestamp_str)
+                    if current_timestamp_value > max_timestamp_value:
+                        max_timestamp_value = current_timestamp_value
+                        recent_file = os.path.join(ruta_carpeta_xml, filename)
+                except ValueError:
+                    continue
+        if not recent_file:
+            return "No se encontró archivo de mensajes SMS."
+
+        try:
+            tree = ET.parse(recent_file)
+            root = tree.getroot()
+            mensajes = []
+            for sms in root.findall('sms'):
+                tipo = sms.get('type')
+                address = sms.get('address')
+                body = sms.get('body')
+                timestamp_ms = sms.get('date')
+                contact_name = sms.get('contact_name')
+                timestamp_int = 0
+                if timestamp_ms:
+                    try:
+                        timestamp_int = int(timestamp_ms)
+                    except ValueError:
+                        pass
+                if not contact_name:
+                    contact_name = address
+                if not body:
+                    body = "[Mensaje vacío]"
+                tipo_str = "Recibido" if tipo == "1" else "Enviado" if tipo == "2" else "Otro"
+                fecha = datetime.fromtimestamp(timestamp_int / 1000).strftime('%Y-%m-%d %H:%M:%S') if timestamp_int else "Fecha desconocida"
+                mensajes.append({
+                    "tipo": tipo_str,
+                    "contacto": contact_name,
+                    "body": body,
+                    "fecha": fecha,
+                    "timestamp": timestamp_int
+                })
+            # Ordenar por fecha (timestamp)
+            mensajes = sorted(mensajes, key=lambda x: x["timestamp"])
+            ultimos_20 = mensajes[-20:] if len(mensajes) >= 20 else mensajes
+            if formato_lista:
+                return ultimos_20 if ultimos_20 else "No hay mensajes para mostrar."
+            # Si no se pide lista, retorna texto plano
+            texto = ""
+            for m in ultimos_20:
+                texto += f"{m['fecha']} - {m['tipo']} - {m['contacto']}:\n{m['body']}\n\n"
+            return texto if texto else "No hay mensajes para mostrar."
+        except Exception as e:
+            return f"Error al leer mensajes: {e}"
 
     def _wrap_text(self, text, max_chars):
         # Utilidad para dividir texto largo en líneas de longitud máxima
