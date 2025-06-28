@@ -204,24 +204,29 @@ class MessageWidget(QFrame):
 
     def setup_ui(self):
         self.setMaximumWidth(400)
-        self.setStyleSheet("""
-            QFrame {
-                background-color: #DCF8C6;
-                border-radius: 8px;
-                border-top-right-radius: 0;
-                padding: 8px;
-                margin: 2px;
-            }
-        """ if self.is_own_message else """
-            QFrame {
-                background-color: #FFFFFF;
-                border-radius: 8px;
-                border-top-left-radius: 0;
-                padding: 8px;
-                margin: 2px;
-                border: 1px solid #E0E0E0;
-            }
-        """)
+        # Cambia el fondo de los mensajes enviados a verde claro y los recibidos a blanco
+        if self.is_own_message:
+            self.setStyleSheet("""
+                QFrame {
+                    background-color: #D4F8E8;
+                    border-radius: 8px;
+                    padding: 8px;
+                    margin: 2px;
+                    border: 1px solid #B2DFDB;
+                    color: #222;
+                }
+            """)
+        else:
+            self.setStyleSheet("""
+                QFrame {
+                    background-color: #FFFFFF;
+                    border-radius: 8px;
+                    padding: 8px;
+                    margin: 2px;
+                    border: 1px solid #E0E0E0;
+                    color: #222;
+                }
+            """)
 
         layout = QVBoxLayout(self)
         layout.setContentsMargins(10, 5, 10, 5)
@@ -578,15 +583,15 @@ class ChatViewer(QMainWindow):
         self.import_zip_btn = QPushButton("📦 Importar chat(s) desde archivo comprimido")
         self.import_zip_btn.setStyleSheet("""
             QPushButton {
-                background-color: #075E54;
-                color: white;
-                border: none;
+                background-color: #f5f5f5;
+                color: #222;
+                border: 1px solid #d0d0d0;
                 padding: 10px;
                 border-radius: 5px;
                 font-weight: bold;
             }
             QPushButton:hover {
-                background-color: #128C7E;
+                background-color: #e0e0e0;
             }
         """)
         self.import_zip_btn.clicked.connect(self.import_compressed_dialog)
@@ -602,9 +607,11 @@ class ChatViewer(QMainWindow):
                 border: 1px solid #E0E0E0;
                 border-radius: 5px;
                 font-size: 14px;
+                background-color: #fff;
+                color: #222;
             }
             QLineEdit:focus {
-                border: 1px solid #128C7E;
+                border: 1.5px solid #128C7E;
             }
         """)
         self.search_bar_contact.textChanged.connect(self.filter_chat_list)
@@ -616,15 +623,16 @@ class ChatViewer(QMainWindow):
             QListWidget {
                 border: 1px solid #E0E0E0;
                 border-radius: 5px;
-                background-color: #F8F8F8;
+                background-color: #FAFAFA;
+                color: #222;
             }
             QListWidget::item {
                 padding: 10px;
                 border-bottom: 1px solid #EDEDED;
             }
             QListWidget::item:selected {
-                background-color: #DCF8C6;
-                color: black;
+                background-color: #e0f7fa;
+                color: #222;
             }
         """)
         self.chat_list_widget.itemClicked.connect(self.display_selected_chat)
@@ -639,7 +647,6 @@ class ChatViewer(QMainWindow):
 
         self.header = ChatHeader("")
         right_panel_layout.addWidget(self.header)
-        # Connect the new file search signal to the handler in ChatViewer
         self.header.file_search_requested.connect(self.start_file_search_for_current_chat)
 
         self.chat_stacked_widget = QStackedWidget()
@@ -649,12 +656,23 @@ class ChatViewer(QMainWindow):
         no_chat_layout = QVBoxLayout(no_chat_selected_widget)
         no_chat_label = QLabel("Selecciona un chat de la lista o impórtalo.")
         no_chat_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        no_chat_label.setStyleSheet("color: #666; font-size: 16px;")
+        no_chat_label.setStyleSheet("color: #222; font-size: 16px; background-color: #fff;")
         no_chat_label.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)  # Hacer texto seleccionable
         no_chat_layout.addWidget(no_chat_label)
         self.chat_stacked_widget.addWidget(no_chat_selected_widget)
 
         main_h_layout.addWidget(right_panel_widget, 5)
+
+        # Cambia el fondo general de la ventana principal y paneles
+        self.setStyleSheet("""
+            QMainWindow, QWidget {
+                background-color: #FFFFFF;
+                color: #222;
+            }
+            QScrollArea {
+                background: #F9F9F9;
+            }
+        """)
 
     def start_file_search_for_current_chat(self, search_term):
         if not self.current_chat_file_path:
