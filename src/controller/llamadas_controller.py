@@ -39,12 +39,13 @@ class LlamadasController:
                                      "No se pudo obtener el historial de llamadas del dispositivo. "
                                      "Posibles razones:\n"
                                      "- El celular no está conectado o la depuración USB no está activa.\n"
-                                     "- El archivo XML no existe en el dispositivo o la ruta/nombre no coincide con el patrón esperado (`/sdcard/extraer/` y `calls-YYYYMMDDHHMMSS.xml`).\n"
+                                     #"- El archivo XML no existe en el dispositivo o la ruta/nombre no coincide con el patrón esperado (`/sdcard/extraer/` y `calls-YYYYMMDDHHMMSS.xml`).\n"
                                      "Revisa la consola de Python para ver los mensajes de depuración de ADB más detallados.",
                                      show_popup=True) # <-- Mostrar este mensaje como popup
             return # Salir de la función si no hay XML
 
-        parsed_calls = self.model.parse_call_log_xml(xml_data)
+        # parsed_calls = self.model.parse_call_log_xml(xml_data)
+        parsed_calls = self.model.parse_call(xml_data)
 
         if not parsed_calls:
             # Esto ocurre si el XML se obtuvo pero está vacío o mal formado.
