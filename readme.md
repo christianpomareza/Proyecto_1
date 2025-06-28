@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🔍 Proyecto de Investigación Forense Móvil
 
 Este proyecto tiene como objetivo desarrollar una herramienta forense en Python orientada al análisis y recuperación de datos desde dispositivos móviles (principalmente Android), utilizando imágenes digitales simuladas. Su finalidad es apoyar procesos de investigación digital mediante la extracción, análisis y visualización de evidencias, contribuyendo al fortalecimiento de prácticas forenses en el ámbito académico y profesional.
@@ -126,3 +127,6 @@ mi-app-celular/
 ---
 
 **🚧 El proyecto está en desarrollo activo. Toda contribución o sugerencia es bienvenida.**
+=======
+# Proyecto de ingeniería de software
+>>>>>>> MVC
