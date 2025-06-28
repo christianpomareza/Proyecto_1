@@ -2,6 +2,7 @@ import hashlib
 from datetime import datetime
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
+from reportlab.lib import colors
 import os
 import pathlib
 import sys
@@ -23,60 +24,76 @@ class ReportesModel:
         c = canvas.Canvas(archivo, pagesize=letter)
         width, height = letter
 
+        def draw_header_footer(page_num):
+            # Encabezado
+            c.setFont("Helvetica-Bold", 13)
+            c.setFillColor(colors.HexColor("#1565c0"))
+            c.drawString(60, height-40, "Forencell: Reporte final")
+            c.setFillColor(colors.black)
+            # Pie de página
+            c.setFont("Helvetica", 9)
+            c.setFillColor(colors.grey)
+            c.drawRightString(width-60, 30, f"Página {page_num} - {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+            c.setFillColor(colors.black)
+
+        page_num = 1
+        # No encabezado en ninguna página
+        # draw_header_footer(page_num)  # Línea eliminada para todas las páginas
+
         # Hoja 1: Índice
         c.setFont("Helvetica-Bold", 18)
-        c.drawCentredString(width/2, height-60, "Forencell: Reporte final")
+        c.setFillColor(colors.HexColor("#1565c0"))
+        c.drawCentredString(width/2, height-70, "Forencell: Reporte final")
+        c.setFillColor(colors.black)
         c.setFont("Helvetica", 10)
-        c.drawCentredString(width/2, height-80, f"Fecha: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        c.drawCentredString(width/2, height-90, f"Fecha: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         c.setFont("Helvetica-Bold", 14)
-        c.drawString(60, height-120, "Índice")
+        c.drawString(60, height-130, "Índice")
         c.setFont("Helvetica", 11)
-        y = height-145
+        y = height-160
         c.drawString(80, y, "1. Introducción")
         y -= 18
-        c.drawString(80, y, "2. Resumen de Llamadas")
+        c.drawString(80, y, "2. Ajustes del Dispositivo")
         y -= 18
-        c.drawString(80, y, "3. Ajustes del Dispositivo")
+        c.drawString(80, y, "3. Aplicaciones Disponibles")
         y -= 18
-        c.drawString(80, y, "4. Aplicaciones Disponibles")
+        c.drawString(80, y, "4. Resumen de Mensajes")
         y -= 18
-        c.drawString(80, y, "5. Resumen de Mensajes")
-        y -= 18
-        c.drawString(80, y, "6. Hash de Integridad")
+        c.drawString(80, y, "5. Hash de Integridad")
         c.showPage()
+        page_num += 1
+        # No encabezado en la segunda página ni en las siguientes
 
         # Hoja 2: Versión para lectura humana
-        y = height-60
+        y = height-70
         c.setFont("Helvetica-Bold", 16)
+        c.setFillColor(colors.HexColor("#1565c0"))
         c.drawCentredString(width/2, y, "Forencell: Reporte final")
-        y -= 30
+        c.setFillColor(colors.black)
+        y -= 35
+
+        # Introducción
         c.setFont("Helvetica-Bold", 12)
+        c.setFillColor(colors.HexColor("#1976d2"))
         c.drawString(60, y, "1. Introducción")
+        c.setFillColor(colors.black)
         y -= 18
         c.setFont("Helvetica", 10)
         intro = (
             "Este reporte ha sido generado automáticamente por Forencell para documentar y preservar evidencia digital obtenida de un dispositivo móvil. "
-            "A continuación se presenta un resumen estructurado de la información relevante extraída, incluyendo historial de llamadas, ajustes del dispositivo, aplicaciones disponibles y los mensajes SMS más recientes."
+            "A continuación se presenta un resumen estructurado de la información relevante extraída, incluyendo ajustes del dispositivo, aplicaciones disponibles y los mensajes SMS más recientes."
         )
         for linea in self._wrap_text(intro, 90):
             c.drawString(80, y, linea)
             y -= 13
         y -= 10
+        # Sin líneas separadoras
+
+        # Ajustes del Dispositivo
         c.setFont("Helvetica-Bold", 12)
-        c.drawString(60, y, "2. Resumen de Llamadas")
-        y -= 18
-        c.setFont("Helvetica", 10)
-        if llamadas:
-            resumen_llamadas = str(llamadas)[:300].replace("\n", " ")
-            for linea in self._wrap_text(resumen_llamadas, 90):
-                c.drawString(80, y, linea)
-                y -= 13
-        else:
-            c.drawString(80, y, "No se pudo obtener el historial de llamadas.")
-            y -= 13
-        y -= 5
-        c.setFont("Helvetica-Bold", 12)
-        c.drawString(60, y, "3. Ajustes del Dispositivo")
+        c.setFillColor(colors.HexColor("#1976d2"))
+        c.drawString(60, y, "2. Ajustes del Dispositivo")
+        c.setFillColor(colors.black)
         y -= 18
         c.setFont("Helvetica", 10)
         if ajustes:
@@ -87,8 +104,13 @@ class ReportesModel:
             c.drawString(80, y, "No se pudo obtener la configuración del dispositivo.")
             y -= 13
         y -= 5
+        # Sin líneas separadoras
+
+        # Aplicaciones Disponibles
         c.setFont("Helvetica-Bold", 12)
-        c.drawString(60, y, "4. Aplicaciones Disponibles")
+        c.setFillColor(colors.HexColor("#1976d2"))
+        c.drawString(60, y, "3. Aplicaciones Disponibles")
+        c.setFillColor(colors.black)
         y -= 18
         c.setFont("Helvetica", 10)
         if apps:
@@ -100,10 +122,13 @@ class ReportesModel:
             c.drawString(80, y, "No se pudo obtener la lista de aplicaciones.")
             y -= 13
         y -= 5
+        # Sin líneas separadoras
 
-        # --- NUEVA SECCIÓN: Resumen de Mensajes ---
+        # Resumen de Mensajes
         c.setFont("Helvetica-Bold", 12)
-        c.drawString(60, y, "5. Resumen de Mensajes")
+        c.setFillColor(colors.HexColor("#1976d2"))
+        c.drawString(60, y, "4. Resumen de Mensajes")
+        c.setFillColor(colors.black)
         y -= 18
         mensajes = self._obtener_ultimos_20_mensajes_sms(formato_lista=True)
         if isinstance(mensajes, str):
@@ -113,29 +138,33 @@ class ReportesModel:
                 y -= 13
         else:
             for m in mensajes:
-                # Subtítulo: fecha y tipo, en negrita y subrayado
                 c.setFont("Helvetica-Bold", 10)
+                c.setFillColor(colors.HexColor("#388e3c") if m['tipo'] == "Enviado" else colors.HexColor("#1565c0"))
                 c.drawString(80, y, f"{m['fecha']} - {m['tipo']}")
+                c.setFillColor(colors.black)
                 y -= 13
-                # Número en negrita y subrayado
                 c.setFont("Helvetica-Bold", 10)
                 c.drawString(100, y, f"Número: {m['contacto']}")
-                c.line(100, y-1, 100 + c.stringWidth(f"Número: {m['contacto']}", "Helvetica-Bold", 10), y-1)
+                # Sin subrayado
                 y -= 13
-                # Mensaje como párrafo
                 c.setFont("Helvetica", 10)
                 for linea in self._wrap_text(m['body'], 90):
                     c.drawString(120, y, linea)
                     y -= 13
-                # Doble enter (espacio extra entre mensajes)
                 y -= 13
                 if y < 80:
                     c.showPage()
-                    y = height-60
+                    page_num += 1
+                    # No encabezado en nuevas páginas
+                    y = height-70
         y -= 5
+        # Sin líneas separadoras
 
+        # Hash de Integridad
         c.setFont("Helvetica-Bold", 12)
-        c.drawString(60, y, "6. Hash de Integridad")
+        c.setFillColor(colors.HexColor("#1976d2"))
+        c.drawString(60, y, "5. Hash de Integridad")
+        c.setFillColor(colors.black)
         y -= 18
         c.setFont("Helvetica", 10)
         c.drawString(80, y, "El hash SHA-256 del archivo PDF se muestra en la ventana de confirmación al finalizar la generación.")
