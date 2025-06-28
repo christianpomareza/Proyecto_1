@@ -127,6 +127,3 @@ mi-app-celular/
 ---
 
 **🚧 El proyecto está en desarrollo activo. Toda contribución o sugerencia es bienvenida.**
-=======
-# Proyecto de ingeniería de software
->>>>>>> MVC
